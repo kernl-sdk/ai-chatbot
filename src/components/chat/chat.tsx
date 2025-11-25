@@ -85,7 +85,9 @@ export function Chat({
     }),
     onError: (error) => {
       toast.error("Failed to send message", {
-        description: error.message || "An error occurred while communicating with the agent.",
+        description:
+          error.message ||
+          "An error occurred while communicating with the agent.",
       });
     },
   });
@@ -127,6 +129,7 @@ export function Chat({
             onNewChat={handleNewChat}
             initialAgent={agent}
             onAgentChange={setAgent}
+            currentThreadId={id}
           />
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Plus, ChevronDown } from "lucide-react";
 /* componnents */
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme";
+import { ThreadHistory } from "@/components/chat/history-dialog";
 import {
   ModelSelector,
   ModelSelectorTrigger,
@@ -27,9 +28,15 @@ interface ChatHeaderProps {
   onNewChat: () => void;
   initialAgent?: string;
   onAgentChange?: (agentId: string) => void;
+  currentThreadId?: string;
 }
 
-export function ChatHeader({ onNewChat, initialAgent, onAgentChange }: ChatHeaderProps) {
+export function ChatHeader({
+  onNewChat,
+  initialAgent,
+  onAgentChange,
+  currentThreadId,
+}: ChatHeaderProps) {
   const [selectedAgent, setSelectedAgent] = useState(
     AGENTS.find((a) => a.id === initialAgent) || AGENTS[0],
   );
@@ -37,15 +44,23 @@ export function ChatHeader({ onNewChat, initialAgent, onAgentChange }: ChatHeade
 
   return (
     <div className="flex items-center justify-between">
-      {/* new chat */}
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={onNewChat}
-        className="cursor-pointer rounded-full"
-      >
-        <Plus className="size-4" />
-      </Button>
+      <div className="flex items-center gap-2">
+        {/* new chat */}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={onNewChat}
+          className="cursor-pointer rounded-full"
+        >
+          <Plus className="size-4" />
+        </Button>
+
+        {/* thread history */}
+        <ThreadHistory
+          currentThreadId={currentThreadId}
+          agentId={selectedAgent.id}
+        />
+      </div>
 
       <div className="flex items-center gap-2">
         {/* agent selector */}
